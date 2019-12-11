@@ -1,0 +1,26 @@
+.input-radio input[type="radio"] {
+	opacity: 0;
+	position: fixed;
+	width: 0;
+}
+
+.input-radio label {
+	@apply inline-block border-2 border-red rounded p-15 cursor-pointer;
+}
+
+.input-radio label:hover {
+	/* @apply bg-red-light text-white border-red-light; */
+}
+
+.input-radio input[type="radio"]:focus + label {
+}
+
+.input-radio input[type="radio"]:focus + label,
+.input-radio input[type="radio"]:active + label {
+	outline-width: 2px;
+	outline-style: solid;
+	outline-color: Highlight;
+}
+.input-radio input[type="radio"]:checked + label {
+	@apply bg-red text-white border-red;
+}

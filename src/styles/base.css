@@ -1,0 +1,7 @@
+body {
+	padding-top: 88px;
+	@apply font-body text-base leading-normal;
+
+	@screen md {
+	}
+}

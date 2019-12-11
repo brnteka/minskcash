@@ -1,0 +1,17 @@
+.vue-slider-rail {
+	@apply bg-gray;
+}
+.vue-slider-process {
+	@apply bg-red-light;
+}
+.vue-slider-dot-handle {
+	@apply bg-red w-full h-full;
+	cursor: pointer;
+	border-radius: 50%;
+}
+.vue-slider-dot-handle-focus {
+	@apply shadow;
+	outline-width: 2px;
+	outline-style: solid;
+	outline-color: Highlight;
+}

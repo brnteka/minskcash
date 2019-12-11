@@ -1,0 +1,16 @@
+.btn {
+	@apply inline-block bg-red py-15 px-3 text-white rounded font-extrabold text-md cursor-pointer;
+	&.disabled {
+		@apply cursor-not-allowed opacity-50;
+	}
+	&:hover:not(.disabled) {
+		/* @apply bg-red-light; */
+	}
+	&:active:not(.disabled) {
+		@apply bg-red-dark;
+	}
+}
+
+.btn-block {
+	@apply block w-full text-center;
+}
