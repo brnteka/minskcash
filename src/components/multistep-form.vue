@@ -7,43 +7,41 @@
         .mb-25.text-center
             span.text-md Шаг {{ currentstep }} из {{ numberOfSteps }}
                 |.
-            span.text-md.font-extrabold.ml-05 {{ formdata.steps[activeStep].question }}
-        form.mb-3
-            .text-center(v-show="currentstep == 1")
-                .inline-block.m-05.input-radio( v-for="(city, i) in formdata.steps.first.cities")
-                    input(type="radio" name="city" :id="'city-' + i + '-' + id" :value="city" v-model="steps.first.city")
-                    label(:for="'city-' + i + '-' + id" ) {{ city }}
-            div(v-show="currentstep == 2")
-                .mb-2
-                    vue-slider( v-model="steps.second.amount" use-keyboard=true :min="200" :max="5000" tooltip="none" :height="10" :dot-size="16" )
-                .text-center.mb-1
-                    span.text-sm.leading-none Я хочу получить:
-                .text-center
-                    .inline-block
-                        input.bg-gray.p-15.rounded.border.border-gray-dark.text-lg.font-extrabold.text-red.leading-none( min="200" max="5000" type="number" :value="steps.second.amount" @change="testChange")
-                    .inline-block.ml-15
-                        span.font-extrabold Руб
-            .text-center(v-show="currentstep == 3")
-                .inline-block.m-05.input-radio( v-for="(variant, i) in formdata.steps.third.credithistory")
-                    input(type="radio" name="credithistory" :id="'credithistory-' + i + '-' + id" :value="variant" v-model="steps.third.credithistory")
-                    label(:for="'credithistory-' + i + '-' + id" ) {{ variant }}
-            div(v-show="currentstep == 4")
-                .md_flex.-mx-15.justify-center
-                    .md_w-6_12.lg_w-5_12.px-15.mb-15.md_mb-0
-                        label.text-sm.mb-1.block Ваше имя
-                        input.block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark(type="text" v-model="steps.fourth.name")
-                    .md_w-6_12.lg_w-5_12.px-15
-                        label.text-sm.mb-1.block Контактный телефон
-                        input.block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark(type="text" v-model="steps.fourth.email")
-        .text-center
-            button.btn.m-05.md_m-15(@click="prevStep" v-if="currentstep > 1") Назад
-            button.btn.m-05.md_m-15(@click="nextStep" v-if="currentstep != numberOfSteps" :class="{disabled: activeStepValidity}") Далее
-            button.btn.m-05.md_m-15(v-if="currentstep == numberOfSteps") Получить условия
+            span.text-md.font-extrabold.ml-05 {{ steps[activeStep].question }}
+        form(@submit.prevent="submit" ref="form")
+            .mb-3
+                .text-center(v-show="currentstep == 1")
+                    .inline-block.m-05.input-radio( v-for="(city, i) in steps.first.cities")
+                        input(type="radio" name="city" :id="'city' + i + uid" :value="city" v-model="steps.first.city.value")
+                        label(:for="'city' + i + uid" ) {{ city }}
+                div(v-show="currentstep == 2")
+                    range-slider( v-model="steps.second.amount.value")
+                    input(type="text" v-model="steps.second.amount.value" hidden name="amount")
+                .text-center(v-show="currentstep == 3")
+                    .inline-block.m-05.input-radio( v-for="(variant, i) in steps.third.credithistories")
+                        input(type="radio" name="credithistory" :id="'credithistory' + i + uid" :value="variant" v-model="steps.third.credithistory.value")
+                        label(:for="'credithistory' + i + uid" ) {{ variant }}
+                div(v-show="currentstep == 4")
+                    .mb-2.md_flex.-mx-15.justify-center
+                        .md_w-6_12.lg_w-5_12.px-15.mb-15.md_mb-0
+                            form-group(:label="steps.fourth.name.label" :id="steps.fourth.name.id + uid" :name="steps.fourth.name.id" v-model="steps.fourth.name.value")
+                        .md_w-6_12.lg_w-5_12.px-15
+                            form-group(:label="steps.fourth.phone.label" :id="steps.fourth.phone.id + uid" :name="steps.fourth.phone.id" v-model="steps.fourth.phone.value" :error="$v.steps.fourth.phone.value.$error")
+                    .mb-2.md_flex.-mx-15.justify-center
+                        .md_w-full.lg_w-10_12.px-15
+                            span * - обязательные поля
+            .text-center
+                button.btn.m-05.md_m-15(@click.prevent="prevStep" v-if="currentstep > 1") Назад
+                button.btn.m-05.md_m-15(@click.prevent="nextStep" v-if="currentstep != numberOfSteps" :class="{disabled: activeStepValidity}") Далее
+                button.btn.m-05.md_m-15(type="submit" v-if="currentstep == numberOfSteps") Получить условия
 </template>
 
 <script>
+import formGroup from "./form-group.vue";
+import rangeSlider from "./range-slider.vue";
 import { required } from "vuelidate/lib/validators";
 import uniqueId from "lodash-es/uniqueId";
+import sendForm from "../mixins/form-send.js";
 
 let sliderValue = {
 	min: 200,
@@ -51,53 +49,60 @@ let sliderValue = {
 };
 
 export default {
+	mixins: [sendForm],
+	components: {
+		formGroup,
+		rangeSlider
+	},
 	data() {
 		return {
-			formdata: {
-				steps: {
-					first: {
-						question: "Город, в котором проживаете:",
-						cities: [
-							"Минск и область",
-							"Брест и область",
-							"Гомель и область",
-							"Могилеви область",
-							"Витебски область",
-							"Гроднои область",
-							"Другое"
-						]
-					},
-					second: {
-						question: "Желаемая сумма займа"
-					},
-					third: {
-						question: "Какая у Вас кредитная история?",
-						credithistory: [
-							"Положительная",
-							"Отрицательная",
-							"Никогда не брал кредит"
-						]
-					},
-					fourth: {
-						question:
-							"У нас есть для вас отличное предложение! Спасибо, что прошли опрос! Для Вас есть выгодные условия для займа!"
-					}
-				}
-			},
 			currentstep: 1,
 			steps: {
 				first: {
-					city: ""
+					question: "Город, в котором проживаете:",
+					cities: [
+						"Минск и область",
+						"Брест и область",
+						"Гомель и область",
+						"Могилеви область",
+						"Витебски область",
+						"Гроднои область",
+						"Другое"
+					],
+					city: {
+						value: ""
+					}
 				},
 				second: {
-					amount: 2500
+					question: "Желаемая сумма займа",
+					amount: {
+						value: 2500
+					}
 				},
 				third: {
-					credithistory: ""
+					question: "Какая у Вас кредитная история?",
+					credithistories: [
+						"Положительная",
+						"Отрицательная",
+						"Никогда не брал кредит"
+					],
+					credithistory: {
+						value: ""
+					}
 				},
 				fourth: {
-					name: "",
-					email: ""
+					question:
+						"У нас есть для вас отличное предложение! Спасибо, что прошли опрос! Для Вас есть выгодные условия для займа!",
+					name: {
+						value: "",
+						id: "name",
+						label: "Ваше имя"
+					},
+					phone: {
+						value: "",
+						id: "phone",
+						label: "Контактный телефон*"
+					}
 				}
 			}
 		};
@@ -106,25 +111,30 @@ export default {
 		steps: {
 			first: {
 				city: {
-					required
+					value: {
+						required
+					}
 				}
 			},
 			second: {
 				amount: {
-					required
+					value: {
+						required
+					}
 				}
 			},
 			third: {
 				credithistory: {
-					required
+					value: {
+						required
+					}
 				}
 			},
 			fourth: {
-				name: {
-					required
-				},
-				email: {
-					required
+				phone: {
+					value: {
+						required
+					}
 				}
 			}
 		}
@@ -139,8 +149,8 @@ export default {
 		activeStepValidity() {
 			return this.$v.steps[this.activeStep].$invalid;
 		},
-		id() {
-			return uniqueId("id");
+		uid() {
+			return uniqueId("uid");
 		}
 	},
 	methods: {
@@ -152,16 +162,50 @@ export default {
 		prevStep(e) {
 			this.currentstep--;
 		},
-		testChange(e) {
-			let { valueAsNumber } = e.target;
-			if (valueAsNumber > sliderValue.max) {
-				this.steps.second.amount = sliderValue.max;
-				this.$forceUpdate();
-			} else if (valueAsNumber < sliderValue.min) {
-				this.steps.second.amount = sliderValue.min;
-				this.$forceUpdate();
-			} else {
-				this.steps.second.amount = valueAsNumber;
+		resetFields() {
+			this.currentstep = 1;
+			this.steps.first.city.value = "";
+			this.steps.second.amount.value = 2500;
+			this.steps.third.credithistory.value = "";
+			this.steps.fourth.name.value = "";
+			this.steps.fourth.phone.value = "";
+		},
+		submit() {
+			this.$v.$touch();
+			if (!this.$v.$invalid) {
+				this.sendForm(this.$refs.form)
+					.then(response => {
+						this.$modal.show("dialog", {
+							title: "Заявка получена, ожидайте!",
+							text: "Менеджер вам позвонит в ближайшее время.",
+							buttons: [
+								{
+									title: "Закрыть",
+									handler: () => {
+										this.$modal.hide("dialog");
+										this.$modal.hide("multistep-form");
+										this.$v.$reset();
+										this.resetFields();
+									}
+								}
+							]
+						});
+					})
+					.catch(error => {
+						this.$modal.show("dialog", {
+							title: "Что-то пошло не так.",
+							text: error,
+							buttons: [
+								{
+									title: "Закрыть",
+									handler: () => {
+										this.$modal.hide("dialog");
+										this.$modal.hide("multistep-form");
+									}
+								}
+							]
+						});
+					});
 			}
 		}
 	}

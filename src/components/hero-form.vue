@@ -1,54 +1,99 @@
 <template lang="pug">
-form.p-15.md_p-3.bg-white.rounded.shadow(@submit.prevent)
+form.p-15.md_p-3.bg-white.rounded.shadow(@submit.prevent="submit" ref="form")
     .mb-2
         .md_flex.-mx-15
             .md_w-6_12.px-15.mb-15.md_mb-0
-                label.block.mb-1.text-sm Телефон
-                input.block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark(type="text")
+                form-group(:label="phone.label" :name="phone.id" :id="phone.id + uid" :error="$v.phone.value.$error" v-model="phone.value")
             .md_w-6_12.px-15
-                label.block.mb-1.text-sm Ваш город
-                input.block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark(type="text")
+                form-group(:label="city.label" :name="city.id" :id="city.id + uid" v-model="city.value")
     .mb-05
-        .mb-1
-            vue-slider(v-model="amount" use-keyboard=true :min="200" :max="5000" tooltip="none" :height="10" :dot-size="16" )
-        .flex.-mx-05.justify-between
-            .flex-none.px-05
-                span.text-sm 200 Руб
-            .flex-none.px-05
-                span.text-sm 5000 Руб
-    .mb-25
-        .text-center.mb-1
-            span.text-sm.leading-none Я хочу получить:
-        .text-center
-            .inline-block
-                input.bg-gray.p-15.rounded.border.border-gray-dark.text-lg.font-extrabold.text-red.leading-none( min="200" max="5000" type="number" @change="testChange" :value="amount")
-            .inline-block.ml-15
-                span.font-extrabold Руб
+        range-slider( v-model="amount.value")
+        input(type="text" v-model="amount.value" hidden name="amount")
+    .mb-2
+        span * - обязательные поля
     .text-center
-        input.btn(type="submit" value="Получить деньги")
+        button.btn(type="submit") Получить деньги
 </template>
 <script>
+import formGroup from "./form-group.vue";
+import rangeSlider from "./range-slider.vue";
+import { required } from "vuelidate/lib/validators";
+import uniqueId from "lodash-es/uniqueId";
+import sendForm from "../mixins/form-send.js";
 export default {
+	components: { formGroup, rangeSlider },
+	mixins: [sendForm],
 	data() {
 		return {
-			phone: "",
-			city: "",
-			amount: 2500
+			phone: {
+				value: "",
+				id: "phone",
+				label: "Телефон*"
+			},
+			city: {
+				value: "",
+				id: "city",
+				label: "Ваш город"
+			},
+			amount: {
+				value: 2500
+			}
 		};
 	},
+	validations: {
+		phone: {
+			value: {
+				required
+			}
+		}
+	},
+	computed: {
+		uid() {
+			return uniqueId("uid");
+		}
+	},
 	methods: {
-		testChange(e) {
-			let min = 200;
-			let max = 5000;
-			let { valueAsNumber } = e.target;
-			if (valueAsNumber > max) {
-				this.amount = max;
-				this.$forceUpdate();
-			} else if (valueAsNumber < min) {
-				this.amount = min;
-				this.$forceUpdate();
-			} else {
-				this.amount = valueAsNumber;
+		resetFields() {
+			for (var key in this.$data) {
+				key == "amount"
+					? (this.$data[key].value = 2500)
+					: (this.$data[key].value = "");
+			}
+		},
+		submit() {
+			this.$v.$touch();
+			if (!this.$v.$invalid) {
+				this.sendForm(this.$refs.form)
+					.then(response => {
+						this.$modal.show("dialog", {
+							title: "Заявка получена, ожидайте!",
+							text: "Менеджер вам позвонит в ближайшее время.",
+							buttons: [
+								{
+									title: "Закрыть",
+									handler: () => {
+										this.$modal.hide("dialog");
+										this.$v.$reset();
+										this.resetFields();
+									}
+								}
+							]
+						});
+					})
+					.catch(error => {
+						this.$modal.show("dialog", {
+							title: "Что-то пошло не так.",
+							text: error,
+							buttons: [
+								{
+									title: "Закрыть",
+									handler: () => {
+										this.$modal.hide("dialog");
+									}
+								}
+							]
+						});
+					});
 			}
 		}
 	}

@@ -2,7 +2,7 @@
 section.py-5.bg-gray
     .container.px-15.mx-auto
         .mb-35.text-center
-            .font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}
+            h1.font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}
             div {{ leading }}
         .xl_flex.-mx-15.justify-center
             .px-15.xl_w-8_12

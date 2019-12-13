@@ -13,7 +13,7 @@ section#whywe.py-5.bg-cover(:style="{ backgroundImage: `url('${bg}')` }")
                     li.advantage-list-item.relative.pl-5.mb-3( v-for="(advantageitem, index) in advantages" v-if="index > 4")
                         span.text-white.font-extrabold.text-md {{ advantageitem }}
         .mt-4.text-center
-            button.btn Получить деньги
+            button(@click="$modal.show('contact-form')").btn Получить деньги
 </template>
 <script>
 import bg from "../static/bg.png";

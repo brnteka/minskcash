@@ -10,6 +10,7 @@ div
 	app-footer
 	app-modal-contact-form
 	app-modal-multistep-form
+	v-dialog
 </template>
 <script>
 import AppHeader from "./components/header.vue";
