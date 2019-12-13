@@ -2,7 +2,7 @@
 .border-4.rounded.shadow.border-red
     .pt-3.px-15.pb-25.text-center.border-b-2.border-gray
         .font-extrabold.text-lg.md_text-xl.mb-15 Подберите условия займа за 1 минуту!
-        div Ответе на 4 вопроса и наши специалисты подберут для вас наилучшие предложения.
+        div Ответьте на 4 вопроса и наши специалисты подберут для вас наилучшие предложения.
     .p-15.md_p-3
         .mb-25.text-center
             span.text-md Шаг {{ currentstep }} из {{ numberOfSteps }}
@@ -23,13 +23,8 @@
                         label(:for="'credithistory' + i + uid" ) {{ variant }}
                 div(v-show="currentstep == 4")
                     .mb-2.md_flex.-mx-15.justify-center
-                        .md_w-6_12.lg_w-5_12.px-15.mb-15.md_mb-0
-                            form-group(:label="steps.fourth.name.label" :id="steps.fourth.name.id + uid" :name="steps.fourth.name.id" v-model="steps.fourth.name.value")
-                        .md_w-6_12.lg_w-5_12.px-15
-                            form-group(:label="steps.fourth.phone.label" :id="steps.fourth.phone.id + uid" :name="steps.fourth.phone.id" v-model="steps.fourth.phone.value" :error="$v.steps.fourth.phone.value.$error")
-                    .mb-2.md_flex.-mx-15.justify-center
-                        .md_w-full.lg_w-10_12.px-15
-                            span * - обязательные поля
+                        .md_w-5_12.lg_w-4_12.px-15
+                            form-group(:label="steps.fourth.phone.label" :inputmode="'decimal'" :id="steps.fourth.phone.id + uid" :name="steps.fourth.phone.id" v-model="steps.fourth.phone.value" :error="$v.steps.fourth.phone.value.$error")
             .text-center
                 button.btn.m-05.md_m-15(@click.prevent="prevStep" v-if="currentstep > 1") Назад
                 button.btn.m-05.md_m-15(@click.prevent="nextStep" v-if="currentstep != numberOfSteps" :class="{disabled: activeStepValidity}") Далее
@@ -64,9 +59,9 @@ export default {
 						"Минск и область",
 						"Брест и область",
 						"Гомель и область",
-						"Могилеви область",
-						"Витебски область",
-						"Гроднои область",
+						"Могилев и область",
+						"Витебск и область",
+						"Гродно и область",
 						"Другое"
 					],
 					city: {
@@ -93,15 +88,10 @@ export default {
 				fourth: {
 					question:
 						"У нас есть для вас отличное предложение! Спасибо, что прошли опрос! Для Вас есть выгодные условия для займа!",
-					name: {
-						value: "",
-						id: "name",
-						label: "Ваше имя"
-					},
 					phone: {
 						value: "",
 						id: "phone",
-						label: "Контактный телефон*"
+						label: "Контактный телефон"
 					}
 				}
 			}

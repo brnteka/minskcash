@@ -3,14 +3,12 @@ form.p-15.md_p-3.bg-white.rounded.shadow(@submit.prevent="submit" ref="form")
     .mb-2
         .md_flex.-mx-15
             .md_w-6_12.px-15.mb-15.md_mb-0
-                form-group(:label="phone.label" :name="phone.id" :id="phone.id + uid" :error="$v.phone.value.$error" v-model="phone.value")
+                form-group(:label="phone.label" :inputmode="'decimal'" :name="phone.id" :id="phone.id + uid" :error="$v.phone.value.$error" v-model="phone.value")
             .md_w-6_12.px-15
                 form-group(:label="city.label" :name="city.id" :id="city.id + uid" v-model="city.value")
-    .mb-05
+    .mb-2
         range-slider( v-model="amount.value")
         input(type="text" v-model="amount.value" hidden name="amount")
-    .mb-2
-        span * - обязательные поля
     .text-center
         button.btn(type="submit") Получить деньги
 </template>
@@ -28,7 +26,7 @@ export default {
 			phone: {
 				value: "",
 				id: "phone",
-				label: "Телефон*"
+				label: "Телефон"
 			},
 			city: {
 				value: "",

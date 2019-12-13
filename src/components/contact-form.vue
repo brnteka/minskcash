@@ -1,13 +1,11 @@
 <template lang="pug">
 form(@submit.prevent="submit" ref="form").p-15.md_p-3.bg-white.rounded
     .mb-2
-        form-group(:id="phone.id + uid" :name="phone.id" :label="phone.label" v-model="phone.value" :error="$v.phone.value.$error")
+        form-group(:id="phone.id + uid" :name="phone.id" :inputmode="'decimal'" :label="phone.label" v-model="phone.value" :error="$v.phone.value.$error")
     .mb-2
-        form-group(:id="amount.id + uid" :name="amount.id" :label="amount.label" v-model="amount.value")
+        form-group(:id="amount.id + uid" :inputmode="'decimal'" :name="amount.id" :label="amount.label" v-model="amount.value")
     .mb-2
         form-group(:id="city.id + uid" :name="city.id" :label="city.label" v-model="city.value")
-    .mb-2
-        span * - обязательные поля
     div
         button.btn.btn-block(type="submit") Отправить
 </template>
@@ -26,7 +24,7 @@ export default {
 		return {
 			phone: {
 				value: "",
-				label: "Телефон*",
+				label: "Телефон",
 				id: "phone"
 			},
 			amount: {

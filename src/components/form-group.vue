@@ -1,7 +1,8 @@
 <template lang="pug">
 div
     label(:for="id").text-sm.mb-1.block {{ label }}
-    input( type="text"
+    input( 	:type="setType"
+			:inputmode="setInputMode"
             :name="name"
             :id="id"
             :value="value"
@@ -12,7 +13,7 @@ div
 </template>
 <script>
 export default {
-	props: ["id", "value", "label", "name", "error"],
+	props: ["id", "value", "label", "name", "error", "type", "inputmode"],
 	computed: {
 		uid() {
 			return uniqueId("id");
@@ -20,6 +21,12 @@ export default {
 		getListeners() {
 			const { input, ...others } = this.$listeners;
 			return { ...others };
+		},
+		setType() {
+			return this.type ? this.type : "text";
+		},
+		setInputMode() {
+			return this.inputmode ? this.inputmode : null;
 		}
 	},
 	methods: {

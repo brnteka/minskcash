@@ -1,5 +1,5 @@
 <template lang="pug">
-section.py-5.bg-cover(:style="{ backgroundImage: `url('${ bg }')` }")
+section#howtogetmoney.py-5.bg-cover(:style="{ backgroundImage: `url('${ bg }')` }")
     .container.px-15.mx-auto
         .mb-35.text-center
             .text-white.font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}

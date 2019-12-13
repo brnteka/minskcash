@@ -21,16 +21,16 @@ div
     .text-center.mb-1
         span.text-sm.leading-none.font-extrabold Я хочу получить:
     .text-center
-        .inline-block
-            input.bg-gray.p-15.rounded.border.border-gray-dark.text-lg.font-extrabold.text-red.leading-none(
+        .inline-block.relative
+            input.amount.bg-gray.p-15.rounded.border.border-gray-dark.text-lg.font-extrabold.text-red.leading-none(
                 min="200"
                 max="5000"
                 type="number"
                 :value="value"
                 @change="testChange"
             )
-        .inline-block.ml-15
-            span.font-extrabold Руб
+            .currency
+                span.font-extrabold Руб
 </template>
 <script>
 let sliderValue = {
@@ -65,4 +65,14 @@ export default {
 	}
 };
 </script>
-<style></style>
+<style>
+.amount {
+	width: 105px;
+}
+.currency {
+	@apply absolute ml-15;
+	left: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+</style>
