@@ -154,12 +154,12 @@ export default {
 		}
 	},
 	methods: {
-		nextStep(e) {
+		nextStep() {
 			if (!this.activeStepValidity) {
 				this.currentstep++;
 			}
 		},
-		prevStep(e) {
+		prevStep() {
 			this.currentstep--;
 		},
 		resetFields() {

@@ -48,11 +48,9 @@ export default {
 	},
 	methods: {
 		handleInput(value) {
-			console.log("change triggered");
 			this.$emit("input", value);
 		},
 		testChange(e) {
-			console.log("change input");
 			let { valueAsNumber } = e.target;
 			if (valueAsNumber > sliderValue.max) {
 				this.handleInput(sliderValue.max);
