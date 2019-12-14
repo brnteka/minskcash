@@ -1,17 +1,17 @@
 <template lang="pug">
 section.py-5
-    .container.px-15.mx-auto
-        .mb-4.text-center
-            .font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}
-            div {{ leading }}
-        .sm_flex.-mx-15.sm_flex-wrap
-            .px-15.sm_w-6_12.md_w-4_12.lg_w-3_12.xl_w-2_12.mb-25.w-8_12.mx-auto( v-for="( carditem, index ) in cards" ) 
-                img(
+	.container.px-15.mx-auto
+		.mb-4.text-center
+			.font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}
+			div {{ leading }}
+		.sm_flex.-mx-15.sm_flex-wrap
+			.px-15.sm_w-6_12.md_w-4_12.lg_w-3_12.xl_w-2_12.mb-25.w-8_12.mx-auto( v-for="( carditem, index ) in cards" ) 
+				img(
 					:src="carditem.image"
 					:alt="carditem.name"
 					:title="carditem.name"
 				).mb-1.w-full.shadow.rounded
-                .text-center {{ carditem.name}}
+				.text-center {{ carditem.name}}
 </template>
 <script>
 import card1 from "../static/cards/01.png";

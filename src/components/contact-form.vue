@@ -1,31 +1,31 @@
 <template lang="pug">
 form( @submit.prevent="submit" ref="form" ).p-15.md_p-3.bg-white.rounded
-    .mb-2
-        form-group(
-					:id="phone.id + uid"
-					:name="phone.id"
-					:inputmode="'decimal'"
-					:label="phone.label"
-					v-model="phone.value"
-					:error="$v.phone.value.$error"
-				)
-    .mb-2
-        form-group(
-					:id="amount.id + uid"
-					:inputmode="'decimal'"
-					:name="amount.id"
-					:label="amount.label"
-					v-model="amount.value"
-				)
-    .mb-2
-        form-group(
-					:id="city.id + uid"
-					:name="city.id"
-					:label="city.label"
-					v-model="city.value"
-				)
-    div
-        button.btn.btn-block( type="submit" ) Отправить
+	.mb-2
+		form-group(
+			:id="phone.id + uid"
+			:name="phone.id"
+			:inputmode="'decimal'"
+			:label="phone.label"
+			v-model="phone.value"
+			:error="$v.phone.value.$error"
+		)
+	.mb-2
+		form-group(
+			:id="amount.id + uid"
+			:inputmode="'decimal'"
+			:name="amount.id"
+			:label="amount.label"
+			v-model="amount.value"
+		)
+	.mb-2
+		form-group(
+			:id="city.id + uid"
+			:name="city.id"
+			:label="city.label"
+			v-model="city.value"
+		)
+	div
+		button.btn.btn-block( type="submit" ) Отправить
 </template>
 <script>
 import formGroup from "./form-group.vue";

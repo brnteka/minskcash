@@ -1,18 +1,18 @@
 <template lang="pug">
 header.header.py-1.md_py-2.fixed.top-0.left-0.w-full.bg-white.z-10.bg-white.shadow
-    .container.mx-auto.h-full.px-15
-        .flex.items-center.justify-between.flex-wrap.h-full
-            .md_mr-15.w-full.md_w-auto.md_flex-none.mb-1.md_mb-0
-                .header-name.font-extrabold.leading-none Деньги в долг в Минске
-                div от 100 до 5 000 BYN
-            nav.mr-15.header-nav.hidden.xl_block
-                ul.flex
-                    li(v-for="navitem in nav").m-1
-                        a( :href="'#' + navitem.link" data-scroll ).inline-block {{ navitem.text }}
-            .md_mr-15.flex-none
-                span.font-extrabold.text-md (831) 255-00-00
-            .md_w-auto.text-center.flex-none
-                button( @click="$modal.show('contact-form')" ).header-cb-btn Заказать звонок
+	.container.mx-auto.h-full.px-15
+		.flex.items-center.justify-between.flex-wrap.h-full
+			.md_mr-15.w-full.md_w-auto.md_flex-none.mb-1.md_mb-0
+				.header-name.font-extrabold.leading-none Деньги в долг в Минске
+				div от 100 до 5 000 BYN
+			nav.mr-15.header-nav.hidden.xl_block
+				ul.flex
+					li( v-for="navitem in nav" ).m-1
+						a( :href="'#' + navitem.link" data-scroll ).inline-block {{ navitem.text }}
+			.md_mr-15.flex-none
+				span.font-extrabold.text-md (831) 255-00-00
+			.md_w-auto.text-center.flex-none
+				button( @click="$modal.show('contact-form')" ).header-cb-btn Заказать звонок
 </template>
 <script>
 import SmoothScroll from "smooth-scroll";

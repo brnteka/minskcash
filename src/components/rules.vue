@@ -1,18 +1,18 @@
 <template lang="pug">
 section.py-5#rules
-    .container.px-15.mx-auto
-        .mb-4.text-center
-            .font-extrabold.text-lg.md_text-xl {{ heading }}
-        .flex.-mx-15.justify-center
-            .px-15.lg_w-10_12.xl_w-8_12.leading-content
-                ul.rules
-                    li(v-for="(rule, index) in rules").mb-15
-                        span.font-extrabold {{ rule.name }}
-                            template(v-if="rule.description")
-                                span.mr-05 :
-                            template(v-else)
-                                | .
-                        span(v-if="rule.description") {{ rule.description }}
+	.container.px-15.mx-auto
+		.mb-4.text-center
+			.font-extrabold.text-lg.md_text-xl {{ heading }}
+		.flex.-mx-15.justify-center
+			.px-15.lg_w-10_12.xl_w-8_12.leading-content
+				ul.rules
+					li( v-for="( rule, index ) in rules" ).mb-15
+						span.font-extrabold {{ rule.name }}
+							template( v-if="rule.description" )
+								span.mr-05 :
+							template( v-else )
+								| .
+						span( v-if="rule.description" ) {{ rule.description }}
 </template>
 <script>
 export default {
