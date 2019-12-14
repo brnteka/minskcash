@@ -1,15 +1,19 @@
 <template lang="pug">
 div
-    label(:for="id").text-sm.mb-1.block {{ label }}
-    input( 	:type="setType"
+	label(
+		:for="id"
+		).text-sm.mb-1.block {{ label }}
+	input(
+			:type="setType"
 			:inputmode="setInputMode"
-            :name="name"
-            :id="id"
-            :value="value"
-            v-bind="$attrs"
-            v-on="getListeners"
-            @input="handleInput"
-            :class="{'border-red': error}").block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark
+			:name="name"
+			:id="id"
+			:value="value"
+			v-bind="$attrs"
+			v-on="getListeners"
+			@input="handleInput"
+			:class="{'border-red': error}"
+		).block.w-full.bg-gray.p-15.rounded.leading-none.border.border-gray-dark
 </template>
 <script>
 export default {

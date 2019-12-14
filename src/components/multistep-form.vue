@@ -1,34 +1,65 @@
 <template lang="pug">
 .border-4.rounded.shadow.border-red
-    .pt-3.px-15.pb-25.text-center.border-b-2.border-gray
-        .font-extrabold.text-lg.md_text-xl.mb-15 Подберите условия займа за 1 минуту!
-        div Ответьте на 4 вопроса и наши специалисты подберут для вас наилучшие предложения.
-    .p-15.md_p-3
-        .mb-25.text-center
-            span.text-md Шаг {{ currentstep }} из {{ numberOfSteps }}
-                |.
-            span.text-md.font-extrabold.ml-05 {{ steps[activeStep].question }}
-        form(@submit.prevent="submit" ref="form")
+	.pt-3.px-15.pb-25.text-center.border-b-2.border-gray
+		.font-extrabold.text-lg.md_text-xl.mb-15 Подберите условия займа за 1 минуту!
+		div Ответьте на 4 вопроса и наши специалисты подберут для вас наилучшие предложения.
+	.p-15.md_p-3
+		.mb-25.text-center
+			span.text-md Шаг {{ currentstep }} из {{ numberOfSteps }}
+				|.
+			span.text-md.font-extrabold.ml-05 {{ steps[activeStep].question }}
+		form( @submit.prevent="submit" ref="form" )
             .mb-3
-                .text-center(v-show="currentstep == 1")
-                    .inline-block.m-05.input-radio( v-for="(city, i) in steps.first.cities")
-                        input(type="radio" name="city" :id="'city' + i + uid" :value="city" v-model="steps.first.city.value")
-                        label(:for="'city' + i + uid" ) {{ city }}
-                div(v-show="currentstep == 2")
-                    range-slider( v-model="steps.second.amount.value")
-                    input(type="text" v-model="steps.second.amount.value" hidden name="amount")
-                .text-center(v-show="currentstep == 3")
-                    .inline-block.m-05.input-radio( v-for="(variant, i) in steps.third.credithistories")
-                        input(type="radio" name="credithistory" :id="'credithistory' + i + uid" :value="variant" v-model="steps.third.credithistory.value")
-                        label(:for="'credithistory' + i + uid" ) {{ variant }}
+                .text-center( v-show="currentstep == 1" )
+                    .inline-block.m-05.input-radio( v-for="( city, i ) in steps.first.cities" )
+                        input(
+								type="radio"
+								name="city"
+								:id="'city' + i + uid"
+								:value="city"
+								v-model="steps.first.city.value"
+							)
+                        label( :for="'city' + i + uid" ) {{ city }}
+                div( v-show="currentstep == 2" )
+                    range-slider( v-model="steps.second.amount.value" )
+                    input(
+							type="text"
+							v-model="steps.second.amount.value"
+							hidden
+							name="amount"
+						)
+                .text-center( v-show="currentstep == 3" )
+                    .inline-block.m-05.input-radio( v-for="( variant, i ) in steps.third.credithistories" )
+                        input(
+								type="radio"
+								name="credithistory"
+								:id="'credithistory' + i + uid"
+								:value="variant"
+								v-model="steps.third.credithistory.value"
+							)
+                        label( :for="'credithistory' + i + uid" ) {{ variant }}
                 div(v-show="currentstep == 4")
                     .mb-2.md_flex.-mx-15.justify-center
                         .md_w-5_12.lg_w-4_12.px-15
-                            form-group(:label="steps.fourth.phone.label" :inputmode="'decimal'" :id="steps.fourth.phone.id + uid" :name="steps.fourth.phone.id" v-model="steps.fourth.phone.value" :error="$v.steps.fourth.phone.value.$error")
+                            form-group(
+										:label="steps.fourth.phone.label"
+										:inputmode="'decimal'"
+										:id="steps.fourth.phone.id + uid"
+										:name="steps.fourth.phone.id"
+										v-model="steps.fourth.phone.value"
+										:error="$v.steps.fourth.phone.value.$error"
+									)
             .text-center
                 //button.btn.m-05.md_m-15(@click.prevent="prevStep" v-if="currentstep > 1") Назад
-                button.btn.m-05.md_m-15(@click.prevent="nextStep" v-if="currentstep != numberOfSteps" :class="{disabled: activeStepValidity}") Далее
-                button.btn.m-05.md_m-15(type="submit" v-if="currentstep == numberOfSteps") Получить условия
+                button.btn.m-05.md_m-15(
+										@click.prevent="nextStep"
+										v-if="currentstep != numberOfSteps"
+										:class="{disabled: activeStepValidity}"
+										) Далее
+                button.btn.m-05.md_m-15(
+										type="submit"
+										v-if="currentstep == numberOfSteps"
+										) Получить условия
 </template>
 
 <script>

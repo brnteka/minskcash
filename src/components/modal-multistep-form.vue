@@ -1,5 +1,5 @@
 <template lang="pug">
-modal(name="multistep-form" height="auto" adaptive=true scrollable=true)
+modal( name="multistep-form" height="auto" adaptive=true scrollable=true )
     multistep-form
 </template>
 <script>

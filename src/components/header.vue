@@ -8,11 +8,11 @@ header.header.py-1.md_py-2.fixed.top-0.left-0.w-full.bg-white.z-10.bg-white.shad
             nav.mr-15.header-nav.hidden.xl_block
                 ul.flex
                     li(v-for="navitem in nav").m-1
-                        a(:href="'#' + navitem.link" data-scroll).inline-block {{ navitem.text }}
+                        a( :href="'#' + navitem.link" data-scroll ).inline-block {{ navitem.text }}
             .md_mr-15.flex-none
                 span.font-extrabold.text-md (831) 255-00-00
             .md_w-auto.text-center.flex-none
-                button(@click="$modal.show('contact-form')").header-cb-btn Заказать звонок
+                button( @click="$modal.show('contact-form')" ).header-cb-btn Заказать звонок
 </template>
 <script>
 import SmoothScroll from "smooth-scroll";

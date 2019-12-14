@@ -8,7 +8,7 @@ footer#contacts.py-5.bg-white
                 .mb-15 {{ phone }}
                 .mb-15 {{ address }}
                 .mb-15 {{ disclaimer }}
-                a(:href="info.link").text-red {{ info.text }}
+                a( :href="info.link" ).text-red {{ info.text }}
 </template>
 <script>
 export default {

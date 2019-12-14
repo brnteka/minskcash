@@ -1,5 +1,5 @@
 <template lang="pug">
-modal(name="contact-form" height="auto" width=370 adaptive=true scrollable=true)
+modal( name="contact-form" height="auto" width=370 adaptive=true scrollable=true )
     contact-form
 </template>
 <script>

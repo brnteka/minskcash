@@ -5,8 +5,12 @@ section.py-5
             .font-extrabold.text-lg.md_text-xl.mb-1 {{ heading }}
             div {{ leading }}
         .sm_flex.-mx-15.sm_flex-wrap
-            .px-15.sm_w-6_12.md_w-4_12.lg_w-3_12.xl_w-2_12.mb-25.w-8_12.mx-auto(v-for="(carditem, index) in cards") 
-                img(:src="carditem.image" :alt="carditem.name" :title="carditem.name").mb-1.w-full.shadow.rounded
+            .px-15.sm_w-6_12.md_w-4_12.lg_w-3_12.xl_w-2_12.mb-25.w-8_12.mx-auto( v-for="( carditem, index ) in cards" ) 
+                img(
+					:src="carditem.image"
+					:alt="carditem.name"
+					:title="carditem.name"
+				).mb-1.w-full.shadow.rounded
                 .text-center {{ carditem.name}}
 </template>
 <script>
