@@ -13,11 +13,11 @@
 				.text-center( v-show="currentstep == 1" )
 					.inline-block.m-05.input-radio( v-for="( city, i ) in steps.first.cities" )
 						input(
-								type="radio"
-								name="city"
-								:id="'city' + i + uid"
-								:value="city"
-								v-model="steps.first.city.value"
+							type="radio"
+							name="city"
+							:id="'city' + i + uid"
+							:value="city"
+							v-model="steps.first.city.value"
 							)
 						label( :for="'city' + i + uid" ) {{ city }}
 				div( v-show="currentstep == 2" )
