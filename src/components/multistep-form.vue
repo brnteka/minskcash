@@ -26,7 +26,7 @@
                         .md_w-5_12.lg_w-4_12.px-15
                             form-group(:label="steps.fourth.phone.label" :inputmode="'decimal'" :id="steps.fourth.phone.id + uid" :name="steps.fourth.phone.id" v-model="steps.fourth.phone.value" :error="$v.steps.fourth.phone.value.$error")
             .text-center
-                button.btn.m-05.md_m-15(@click.prevent="prevStep" v-if="currentstep > 1") Назад
+                //button.btn.m-05.md_m-15(@click.prevent="prevStep" v-if="currentstep > 1") Назад
                 button.btn.m-05.md_m-15(@click.prevent="nextStep" v-if="currentstep != numberOfSteps" :class="{disabled: activeStepValidity}") Далее
                 button.btn.m-05.md_m-15(type="submit" v-if="currentstep == numberOfSteps") Получить условия
 </template>
@@ -149,9 +149,9 @@ export default {
 				this.currentstep++;
 			}
 		},
-		prevStep() {
-			this.currentstep--;
-		},
+		// prevStep() {
+		// 	this.currentstep--;
+		// },
 		resetFields() {
 			this.currentstep = 1;
 			this.steps.first.city.value = "";
