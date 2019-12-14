@@ -9,18 +9,18 @@
 				|.
 			span.text-md.font-extrabold.ml-05 {{ steps[activeStep].question }}
 		form( @submit.prevent="submit" ref="form" )
-            .mb-3
-                .text-center( v-show="currentstep == 1" )
-                    .inline-block.m-05.input-radio( v-for="( city, i ) in steps.first.cities" )
-                        input(
+			.mb-3
+				.text-center( v-show="currentstep == 1" )
+					.inline-block.m-05.input-radio( v-for="( city, i ) in steps.first.cities" )
+						input(
 								type="radio"
 								name="city"
 								:id="'city' + i + uid"
 								:value="city"
 								v-model="steps.first.city.value"
 							)
-                        label( :for="'city' + i + uid" ) {{ city }}
-                div( v-show="currentstep == 2" )
+						label( :for="'city' + i + uid" ) {{ city }}
+				div( v-show="currentstep == 2" )
                     range-slider( v-model="steps.second.amount.value" )
                     input(
 							type="text"
